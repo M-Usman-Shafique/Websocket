@@ -111,9 +111,9 @@
       const input = document.getElementById("input");
 
       // Listen for messages from the server
-      socket.on("sms", (msg) => {
+      socket.on("msg", (message) => {
         const li = document.createElement("li");
-        li.textContent = msg;
+        li.textContent = message;
         document.getElementById("messages").appendChild(li);
         window.scrollTo(0, document.body.scrollHeight);
       });
