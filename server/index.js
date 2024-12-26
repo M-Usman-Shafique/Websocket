@@ -20,9 +20,18 @@ app.get("/", (req, res) => {
 
 io.on("connection", (socket) => {
   console.log("A user connected:", socket.id);
-  socket.on("sms", (message) => {
-    // socket.broadcast.emit("msg", message);
-    io.emit("msg", message);
+
+  socket.on("join-room", (room) => {
+    socket.join(room);
+    console.log("User joined room:", room);
+  });
+
+  socket.on("send-data", (data) => {
+    if (data.roomStorage) {
+      io.to(data.roomStorage).emit("msg", data.message);
+    } else {
+      io.emit("msg", data.message);
+    }
   });
 });
 
